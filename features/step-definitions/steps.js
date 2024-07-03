@@ -15,9 +15,30 @@ When(
 )
 
 Then(
-    'user is successfully Log in and redirect to the Inventory Page',
+    'user is successfully logged in and redirected to the inventory page',
     async () => {
         await ProductPage.validateOnPage()
-        await browser.debug()
+        // await browser.debug()
+    },
+)
+
+Then(
+    `error popup displays "Epic sadface: this user has been locked out."`,
+    async () => {
+        const errorMessage =
+            'Epic sadface: Sorry, this user has been locked out.'
+        await LoginPage.validateErrorPopUpMessage(errorMessage)
+        // await browser.debug()
+    },
+)
+
+Then(
+    `error popup displays "Epic sadface: Username and password do not match any user in this service"`,
+    async () => {
+        const errorMessage =
+            'Epic sadface: Username and password do not match any user in this service'
+
+        await LoginPage.validateErrorPopUpMessage(errorMessage)
+        // await browser.debug()
     },
 )

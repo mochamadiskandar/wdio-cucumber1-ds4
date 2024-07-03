@@ -20,6 +20,10 @@ class LoginPage extends Page {
         return $("//input[@class='submit-button btn_action']")
     }
 
+    get errorPopupModal() {
+        return $("//h3[@data-test='error']")
+    }
+
     async login(username, password) {
         await this.inputUsername.setValue(username)
         await this.inputPassword.setValue(password)
@@ -30,6 +34,13 @@ class LoginPage extends Page {
             loginButtonValue,
         )
         await this.loginButton.click()
+    }
+
+    async validateErrorPopUpMessage(expectedMessage) {
+        await this.errorPopupModal.waitForDisplayed({ timeout: 2000 })
+        const popupModalText = await this.errorPopupModal.getText()
+        console.log('🚀 ~ this popupModalText:', popupModalText)
+        await expect(popupModalText).toBe(expectedMessage)
     }
 }
 
