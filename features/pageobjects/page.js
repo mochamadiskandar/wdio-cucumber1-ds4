@@ -1,15 +1,13 @@
 import { browser } from '@wdio/globals'
 
-/**
-* main page object containing all methods, selectors and functionality
-* that is shared across all page objects
-*/
+/* 
+Perlu export langsung dari sini
+Ini jauh lebih fleksibel, dan penerapan OOP dapat bekerja
+dalam hal ini berarti Inheritance pada page lainnya
+ */
 export default class Page {
-    /**
-    * Opens a sub page of the page
-    * @param path path of the sub page (e.g. /path/to/page.html)
-    */
-    open (path) {
-        return browser.url(`https://the-internet.herokuapp.com/${path}`)
+    open(path) {
+        const baseUrl = process.env.BASE_URL
+        return browser.url(`${baseUrl}/${path}`)
     }
 }

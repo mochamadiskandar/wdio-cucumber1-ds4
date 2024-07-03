@@ -5,7 +5,8 @@
     "main": "wdio.conf.js",
     "type": "module",
     "scripts": {
-        "wdio": "wdio run ./wdio.conf.js"
+        "wdio": "wdio run ./wdio.conf.js",
+        "wdio-cu": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@TC1'"
     },
     "author": {
         "name": "Mochamad Iskandar"

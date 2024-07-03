@@ -1,23 +1,21 @@
-import { Given, When, Then } from '@wdio/cucumber-framework';
-import { expect, $ } from '@wdio/globals'
+import { Given, When, Then } from '@wdio/cucumber-framework'
+import LoginPage from '../pageobjects/login.page.js'
+import ProductPage from '../pageobjects/product.page.js'
 
-import LoginPage from '../pageobjects/login.page.js';
-import SecurePage from '../pageobjects/secure.page.js';
+Given(`user already on login page`, async () => {
+    await LoginPage.open()
+})
 
-const pages = {
-    login: LoginPage
-}
+When(
+    /^user login using "([^"]*)" as valid username and "([^"]*)" as valid password$/,
+    async (username, password) => {
+        await LoginPage.login(username, password)
+    },
+)
 
-Given(/^I am on the (\w+) page$/, async (page) => {
-    await pages[page].open()
-});
-
-When(/^I login with (\w+) and (.+)$/, async (username, password) => {
-    await LoginPage.login(username, password)
-});
-
-Then(/^I should see a flash message saying (.*)$/, async (message) => {
-    await expect(SecurePage.flashAlert).toBeExisting();
-    await expect(SecurePage.flashAlert).toHaveTextContaining(message);
-});
-
+Then(
+    `user is successfully Log in and redirect to the Inventory Page`,
+    async () => {
+        await ProductPage.validateOnPage()
+    },
+)
