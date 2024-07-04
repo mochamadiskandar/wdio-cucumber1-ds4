@@ -7,9 +7,11 @@
     "scripts": {
         "wdio": "wdio run ./wdio.conf.js",
         "wdio-cu-login": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@login'",
+        "wdio-cu-positive": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@positive'",
         "wdio-cu-negative": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@negative'",
         "wdio-cu-random": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@random'",
-        "wdio-cu-tc": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@TC2'"
+        "wdio-cu-tc2": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@TC2'",
+        "wdio-cu-fail": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@intentional-fail'"
     },
     "author": {
         "name": "Mochamad Iskandar"
@@ -25,7 +27,9 @@
         "@wdio/cucumber-framework": "^8.39.0",
         "@wdio/local-runner": "^8.39.0",
         "@wdio/spec-reporter": "^8.39.0",
+        "dayjs": "^1.11.11",
         "wdio-cucumberjs-json-reporter": "^5.2.1",
+        "wdio-html-nice-reporter": "^8.1.6",
         "wdio-wait-for": "^3.0.11"
     }
 }

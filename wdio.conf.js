@@ -1,3 +1,6 @@
+import path from 'path'
+import dayjs from 'dayjs'
+
 export const config = {
     //
     // ====================
@@ -20,9 +23,7 @@ export const config = {
     // The path of the spec files will be resolved relative from the directory of
     // of the config file unless it's absolute.
     //
-    specs: [
-        './features/**/*.feature'
-    ],
+    specs: ['./features/**/*.feature'],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -43,15 +44,31 @@ export const config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 5,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-        browserName: 'chrome'
-    }],
+    capabilities: [
+        {
+            myChromeBrowser: {
+                capabilities: {
+                    browserName: 'chrome',
+                },
+            },
+            myEdgeBrowser: {
+                capabilities: {
+                    browserName: 'edge',
+                },
+            },
+            // myFirefoxBrowser: {
+            //     capabilities: {
+            //         browserName: 'firefox',
+            //     },
+            // },
+        },
+    ],
 
     //
     // ===================
@@ -109,7 +126,7 @@ export const config = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'cucumber',
-    
+
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -123,7 +140,23 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec','cucumberjs-json'],
+    reporters: [
+        'spec',
+        'cucumberjs-json',
+        [
+            'html-nice',
+            {
+                outputDir: './reports/html-nice/',
+                filename: 'master-report.html',
+                reportTitle: 'Master Report',
+                browserName: 'Chrome & Edge',
+                linkScreenshots: true,
+                showInBrowser: false,
+                collapseTests: false,
+                useOnAfterCommandForScreenshot: false,
+            },
+        ],
+    ],
 
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -150,9 +183,8 @@ export const config = {
         // <number> timeout for step definitions
         timeout: 60000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
-        ignoreUndefinedDefinitions: false
+        ignoreUndefinedDefinitions: false,
     },
-
 
     //
     // =====
@@ -264,8 +296,32 @@ export const config = {
      * @param {number}                 result.duration  duration of scenario in milliseconds
      * @param {object}                 context          Cucumber World object
      */
-    // afterScenario: function (world, result, context) {
-    // },
+    afterScenario: async function (world, result, context) {
+        if (!result.passed) {
+            const dir = './reports/screenshot/'
+
+            // generate unique filename using dayjs
+            const timestamp = dayjs().format('YYYY-MM-DD_HH-mm-ss')
+            const fileName = `failed-test-${timestamp}.png`
+
+            // await browser.waitUntil(
+            //     async () => {
+            //         const readyState = await browser.execute(
+            //             () => document.readyState,
+            //         )
+            //         return readyState === 'complete'
+            //     },
+            //     {
+            //         timeout: 10000, // Timeout dalam milidetik
+            //         timeoutMsg:
+            //             'Halaman tidak selesai dimuat dalam waktu yang ditentukan',
+            //     },
+            // )
+
+            // save screenshot
+            await browser.saveScreenshot(path.join(dir, fileName))
+        }
+    },
     /**
      *
      * Runs after a Cucumber Feature.
@@ -274,7 +330,7 @@ export const config = {
      */
     // afterFeature: function (uri, feature) {
     // },
-    
+
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name
@@ -312,22 +368,22 @@ export const config = {
     // onComplete: function(exitCode, config, capabilities, results) {
     // },
     /**
-    * Gets executed when a refresh happens.
-    * @param {string} oldSessionId session ID of the old session
-    * @param {string} newSessionId session ID of the new session
-    */
+     * Gets executed when a refresh happens.
+     * @param {string} oldSessionId session ID of the old session
+     * @param {string} newSessionId session ID of the new session
+     */
     // onReload: function(oldSessionId, newSessionId) {
     // }
     /**
-    * Hook that gets executed before a WebdriverIO assertion happens.
-    * @param {object} params information about the assertion to be executed
-    */
+     * Hook that gets executed before a WebdriverIO assertion happens.
+     * @param {object} params information about the assertion to be executed
+     */
     // beforeAssertion: function(params) {
     // }
     /**
-    * Hook that gets executed after a WebdriverIO assertion happened.
-    * @param {object} params information about the assertion that was executed, including its results
-    */
+     * Hook that gets executed after a WebdriverIO assertion happened.
+     * @param {object} params information about the assertion that was executed, including its results
+     */
     // afterAssertion: function(params) {
     // }
 }
