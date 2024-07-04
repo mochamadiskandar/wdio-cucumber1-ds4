@@ -18,7 +18,6 @@ Then(
     'user is successfully logged in and redirected to the inventory page',
     async () => {
         await ProductPage.validateOnPage()
-        // await browser.debug()
     },
 )
 
@@ -28,7 +27,6 @@ Then(
         const errorMessage =
             'Epic sadface: Sorry, this user has been locked out.'
         await LoginPage.validateErrorPopUpMessage(errorMessage)
-        // await browser.debug()
     },
 )
 
@@ -37,8 +35,11 @@ Then(
     async () => {
         const errorMessage =
             'Epic sadface: Username and password do not match any user in this service'
-
         await LoginPage.validateErrorPopUpMessage(errorMessage)
-        // await browser.debug()
     },
 )
+
+Then(`error popup displays "Kamu belum registrasi bro!"`, async () => {
+    const errorMessage = 'Kamu belum registrasi bro!'
+    await LoginPage.validateErrorPopUpMessage(errorMessage)
+})

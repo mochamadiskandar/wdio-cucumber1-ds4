@@ -1,4 +1,4 @@
-import { $, $$ } from '@wdio/globals'
+import { $ } from '@wdio/globals'
 import Page from './page.js'
 
 class ProductsPage extends Page {
@@ -7,7 +7,7 @@ class ProductsPage extends Page {
     }
 
     get titleProducts() {
-        return $("//span[@class= 'title']")
+        return $("//span[@data-test='title']")
     }
 
     get cartButton() {
@@ -15,18 +15,18 @@ class ProductsPage extends Page {
     }
 
     async validateOnPage() {
-        await this.titleProducts.waitForDisplayed({ timeout: 2000 })
-        await expect(this.titleProducts).toBeDisplayed()
+        await this.titleProducts.waitForDisplayed({ timeout: 3000 })
+        await expect(await this.titleProducts.isDisplayed()).toBeTruthy()
     }
 
-    async AddProductToCart() {
-        await this.validateOnPage()
-        await this.cartButton.waitForClickable({ timeout: 2000 })
-        await this.cartButton.click()
+    // async AddProductToCart() {
+    //     await this.validateOnPage()
+    //     await this.cartButton.waitForClickable({ timeout: 2000 })
+    //     await this.cartButton.click()
 
-        const dataTestValue = await this.cartButton.getAttribute('data-test')
-        console.log(`'🚀 ~ Clicked '${dataTestValue}' button.`)
-    }
+    //     const dataTestValue = await this.cartButton.getAttribute('data-test')
+    //     console.log(`'🚀 ~ Clicked '${dataTestValue}' button.`)
+    // }
 }
 
 export default new ProductsPage()

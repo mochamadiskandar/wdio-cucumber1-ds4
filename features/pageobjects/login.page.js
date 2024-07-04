@@ -40,7 +40,7 @@ class LoginPage extends Page {
         await this.errorPopupModal.waitForDisplayed({ timeout: 2000 })
         const popupModalText = await this.errorPopupModal.getText()
         console.log('🚀 ~ this popupModalText:', popupModalText)
-        await expect(popupModalText).toBe(expectedMessage)
+        await expect(popupModalText[0]).toBe(expectedMessage)
     }
 }
 
