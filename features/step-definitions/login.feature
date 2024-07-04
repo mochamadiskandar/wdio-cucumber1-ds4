@@ -14,8 +14,6 @@ Feature: Login
       | username      | password     |
       | standard_user | secret_sauce |
       | problem_user  | secret_sauce |
-      # | error_user    | secret_sauce |
-      # | visual_user   | secret_sauce |
 
   @TC2 @negative @lockout
   Scenario Outline: TC-2 Login using lock out username
@@ -35,3 +33,8 @@ Feature: Login
       | randomUsername | randomPassword |
       |           1234 | abcd           |
       | loremIpsum     | dolorSitAmet   |
+
+  @TC4 @intentional-fail
+  Scenario Outline: TC-4 Login using random username
+    When user login using "johndoe" as username and "123456" as password
+    Then error popup displays "Kamu belum registrasi bro!"
