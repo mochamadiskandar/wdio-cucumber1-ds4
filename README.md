@@ -1,7 +1,7 @@
-# WEB-AUTOMATION-WDIO-POM-DS4
+# WEB-AUTOMATION-WDIO-POM-CUCUMBER-DS4
 
 -   Create Web Automation using [webdriver.io](https://webdriver.io/docs/gettingstarted) & [cucumber](https://webdriver.io/docs/frameworks/#using-cucumber).
--   Web Automation ini sengaja di config untuk running secara pararel dengan multiple browser yaitu chrome dan edge.
+-   Running secara pararel dengan multiple browser yaitu chrome dan edge.
 -   Ketika run Test Case Untuk setiap **Test Failed** akan otomatis tercapture dan masuk ke dalam direktori
 
     ```text
