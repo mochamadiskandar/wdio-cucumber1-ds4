@@ -1,14 +1,14 @@
 # WEB-AUTOMATION-WDIO-POM-DS4
 
 -   Create Web Automation using [webdriver.io](https://webdriver.io/docs/gettingstarted) & [cucumber](https://webdriver.io/docs/frameworks/#using-cucumber).
--   Pararel Run Test :Web Automation ini sengaja di design untuk running secara pararel dengan 2 browser yaitu chrome dan edge.
+-   Web Automation ini sengaja di config untuk running secara pararel dengan multiple browser yaitu chrome dan edge.
 -   Ketika run Test Case Untuk setiap **Test Failed** akan otomatis tercapture dan masuk ke dalam direktori
 
     ```text
     ./reports/screenshot/
     ```
 
--   Untuk report secara general saya menggunakan [HTML Nice Reports](https://www.npmjs.com/package/wdio-html-nice-reporter)
+-   Untuk report secara general saya menggunakan [HTML Nice Reports](https://www.npmjs.com/package/wdio-html-nice-reporter), hasilnya akan masuk ke dalam direktori
 
     ```text
     ./reports/html-nice/
@@ -39,5 +39,5 @@ Please see the **Report**
 
 ```text
 failed screenshot : "./reports/screenshot/"
-html report : "/reports/html-nice/"
+html report : "/reports/html-nice/" --> silahkan open file .html di browser.
 ```
