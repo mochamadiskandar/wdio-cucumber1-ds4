@@ -1,5 +1,10 @@
+import fs from 'fs'
 import path from 'path'
 import dayjs from 'dayjs'
+import { v4 as uuidv4, v4 } from 'uuid'
+
+// global variable to generate timestamp
+const globalTimestamp = dayjs().format('YYYY-MM-DD_HH-mm-ss')
 
 export const config = {
     //
@@ -146,11 +151,12 @@ export const config = {
         [
             'html-nice',
             {
-                outputDir: './reports/html-nice/',
-                filename: 'master-report.html',
-                reportTitle: 'Master Report',
+                // outputDir: './reports/html-nice/',
+                outputDir: `./reports/html/html-report-${globalTimestamp}`,
+                filename: `master-report-${v4()}.html`,
+                reportTitle: `master-report-${v4()}`,
                 browserName: 'Chrome & Edge',
-                linkScreenshots: true,
+                linkScreenshots: false,
                 showInBrowser: false,
                 collapseTests: false,
                 useOnAfterCommandForScreenshot: false,
@@ -311,11 +317,14 @@ export const config = {
      */
     afterScenario: async function (world, result, context) {
         if (!result.passed) {
-            const dir = './reports/screenshot/'
+            const dir = `./reports/screenshot/failed-test-${globalTimestamp}`
 
-            // generate unique filename using dayjs
-            const timestamp = dayjs().format('YYYY-MM-DD_HH-mm-ss')
-            const fileName = `failed-test-${timestamp}.png`
+            const fileName = `capture-${globalTimestamp}.png`
+
+            // create new folder if not exist
+            if (!fs.existsSync(dir)) {
+                await fs.mkdirSync(dir, { recursive: true })
+            }
 
             // await browser.waitUntil(
             //     async () => {
@@ -332,7 +341,7 @@ export const config = {
             // )
 
             // save screenshot
-            await browser.saveScreenshot(path.join(dir, fileName))
+            await browser.saveScreenshot(`${dir}/${fileName}`)
         }
     },
     /**
