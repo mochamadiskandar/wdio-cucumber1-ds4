@@ -36,3 +36,8 @@ Tunggu hingga seluruh proses testing selesai.
 ### Boom!! Test Report is ready
 
 Reports dan capture berhasil dibuat, silahkan cek direktori **reports**
+
+```text
+  html report   : "/reports/html/" --> open file.html pada browser
+  screenshot    : "/reports/screenshot/"
+```
