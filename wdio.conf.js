@@ -254,16 +254,29 @@ export const config = {
      * @param {string}                   uri      path to feature file
      * @param {GherkinDocument.IFeature} feature  Cucumber feature object
      */
-    // beforeFeature: function (uri, feature) {
-    // },
+    beforeFeature: function (uri, feature) {
+        // console.log(feature)
+        const featureName = feature.name
+        console.log(
+            '🚀 ~ Need to execute something beforeFeature :',
+            featureName,
+        )
+        console.log('config database')
+    },
     /**
      *
      * Runs before a Cucumber Scenario.
      * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
      * @param {object}                 context  Cucumber World object
      */
-    // beforeScenario: function (world, context) {
-    // },
+    beforeScenario: function (world, context) {
+        // console.log(world)
+        const scenarioName = world.pickle.name
+        console.log(
+            '🚀 ~ Need to execute something beforeScenario :',
+            scenarioName,
+        )
+    },
     /**
      *
      * Runs before a Cucumber Step.

@@ -10,7 +10,7 @@
         "wdio-cu-positive": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@positive'",
         "wdio-cu-negative": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@negative'",
         "wdio-cu-random": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@random'",
-        "wdio-cu-tc2": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@TC2'",
+        "wdio-cu-tc1": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@TC1'",
         "wdio-cu-fail": "npx wdio ./wdio.conf.js --cucumberOpts.tags='@intentional-fail'"
     },
     "author": {
