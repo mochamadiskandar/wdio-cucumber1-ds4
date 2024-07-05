@@ -35,9 +35,4 @@ Tunggu hingga seluruh proses testing selesai.
 
 ### Boom!! Test Report is ready
 
-Please see the **Report**
-
-```text
-failed screenshot : "./reports/screenshot/"
-html report : "/reports/html-nice/" --> silahkan open file .html di browser.
-```
+Reports dan capture berhasil dibuat, silahkan cek direktori **reports**
