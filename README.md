@@ -2,16 +2,16 @@
 
 -   Create Web Automation using [webdriver.io](https://webdriver.io/docs/gettingstarted) & [cucumber](https://webdriver.io/docs/frameworks/#using-cucumber).
 -   Running secara pararel dengan multiple browser yaitu chrome dan edge.
--   Ketika run Test Case Untuk setiap **Test Failed** akan otomatis tercapture dan masuk ke dalam direktori
+-   Setiap kali **Failed Test Case**, akan secara otomatis diambil screenshot dan disimpan dalam direktori, dengan nama file yang berbeda berdasarkan timestamp.
 
     ```text
     ./reports/screenshot/
     ```
 
--   Untuk report secara general saya menggunakan [HTML Nice Reports](https://www.npmjs.com/package/wdio-html-nice-reporter), hasilnya akan masuk ke dalam direktori
+-   Untuk report saya menggunakan [HTML Nice Reports](https://www.npmjs.com/package/wdio-html-nice-reporter), Laporan disimpan dalam direktori yang dibuat otomatis dengan UUID.
 
     ```text
-    ./reports/html-nice/
+    ./reports/html/
     ```
 
 ## How to Run?
