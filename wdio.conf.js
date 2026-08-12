@@ -1,7 +1,12 @@
 import fs from 'fs'
 import path from 'path'
 import dayjs from 'dayjs'
+// [HISTORY] 'uuid' dulu dipakai untuk generate nama file unik di reporter
+// 'html-nice' (lihat catatan di bagian `reporters` di bawah). Sudah tidak
+// dipakai lagi sejak reporter itu diganti, tapi importnya dibiarkan sebagai
+// jejak histori -- package 'uuid' di package.json juga masih terpasang.
 import { v4 as uuidv4, v4 } from 'uuid'
+import { generate } from 'multiple-cucumber-html-reporter'
 
 // global variable to generate timestamp
 const globalTimestamp = dayjs().format('YYYY-MM-DD_HH-mm-ss')
@@ -62,11 +67,11 @@ export const config = {
                     browserName: 'chrome',
                 },
             },
-            myEdgeBrowser: {
-                capabilities: {
-                    browserName: 'edge',
-                },
-            },
+            // myEdgeBrowser: {
+            //     capabilities: {
+            //         browserName: 'edge',
+            //     },
+            // },
             // myFirefoxBrowser: {
             //     capabilities: {
             //         browserName: 'firefox',
@@ -147,22 +152,45 @@ export const config = {
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: [
         'spec',
-        'cucumberjs-json',
         [
-            'html-nice',
+            'cucumberjs-json',
             {
-                // outputDir: './reports/html-nice/',
-                outputDir: `./reports/html/html-report-${globalTimestamp}`,
-                filename: `master-report-${v4()}.html`,
-                reportTitle: `master-report-${v4()}`,
-                browserName: 'Chrome & Edge',
-                linkScreenshots: false,
-                showInBrowser: false,
-                collapseTests: false,
-                useOnAfterCommandForScreenshot: false,
+                jsonFolder: './.tmp/json/',
+                language: 'en',
             },
         ],
     ],
+    // ================================================================
+    // [HISTORY] Reporter 'html-nice' (wdio-html-nice-reporter) - REMOVED
+    // ================================================================
+    // Dulu dipakai untuk generate HTML report, config-nya seperti ini:
+    //
+    // reporters: [
+    //     'spec',
+    //     'cucumberjs-json',
+    //     [
+    //         'html-nice',
+    //         {
+    //             outputDir: `./reports/html/html-report-${globalTimestamp}`,
+    //             filename: `master-report-${v4()}.html`,
+    //             reportTitle: `master-report-${v4()}`,
+    //             browserName: 'Chrome & Edge',
+    //             linkScreenshots: false,
+    //             showInBrowser: false,
+    //             collapseTests: false,
+    //             useOnAfterCommandForScreenshot: false,
+    //         },
+    //     ],
+    // ],
+    //
+    // Dihapus saat upgrade WebdriverIO v8 -> v9 (Agustus 2026) karena package
+    // ini terakhir di-update Oktober 2024 dan belum mengikuti perubahan
+    // internal API @wdio/reporter di v9 -- akibatnya HTML report gagal
+    // ter-generate (proses berhenti diam-diam setelah tahap JSON, tanpa error).
+    // Diganti dengan 'multiple-cucumber-html-reporter' yang dipanggil manual
+    // lewat hook onComplete() di bawah, karena package itu baca file JSON
+    // langsung (independen dari internal API reporter WDIO) sehingga lebih
+    // tahan terhadap perubahan versi WebdriverIO ke depannya.
 
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -387,8 +415,28 @@ export const config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+    onComplete: function (exitCode, config, capabilities, results) {
+        generate({
+            jsonDir: './.tmp/json/',
+            reportPath: `./reports/html/html-report-${globalTimestamp}/`,
+            metadata: {
+                browser: {
+                    name: 'chrome',
+                },
+                device: 'Local test machine',
+                platform: {
+                    name: process.platform,
+                },
+            },
+            customData: {
+                title: 'Run info',
+                data: [
+                    { label: 'Project', value: 'wdio-cucumber1-ds4' },
+                    { label: 'Execution Time', value: globalTimestamp },
+                ],
+            },
+        })
+    },
     /**
      * Gets executed when a refresh happens.
      * @param {string} oldSessionId session ID of the old session
